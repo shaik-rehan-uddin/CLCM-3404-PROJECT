@@ -1,0 +1,54 @@
+<section id="active-game" style="display: <%= viewData.activeGameDisplay %>;">
+  <article id="game-over" style="display: <%= viewData.gameOverStatusDisplay %>;">
+    <h2><%= viewData.gameOverStatusText %></h2>
+    <div>
+      <button class="btn join-random-room-btn join-new-room-btn">
+        New Room
+      </button>
+      <button id="play-again-btn" class="btn btn-alt">Play Again!</button>
+      <button class="btn btn invite-friend-btn join-new-room-btn" type="submit">
+        Invite Friend
+      </button>
+    </div>
+  </article>
+  <div id="players-info">
+    <p id="player1" class="player-name">
+      <% if (viewData.player1Name && viewData.player1Symbol && viewData.player1Number) { %> 
+        <%= viewData.player1Name %> (<%= viewData.player1Symbol %>)
+      <% } else { %> 
+        Waiting...
+      <% } %> 
+    </p>
+    <p>vs</p>
+    <p id="player2" class="player-name">
+      <% if (viewData.player2Name && viewData.player2Symbol && viewData.player2Number) { %> 
+        <%= viewData.player2Name %> (<%= viewData.player2Symbol %>)
+      <% } else { %> 
+        Waiting...
+      <% } %> 
+    </p>
+  </div>
+  <div class="game-error-message">
+    <p>
+      <span>Game error message</span>
+      <button>X</button>
+    </p>
+  </div>
+  <ol id="game-board">
+    <% for (const cell of viewData.boardCellsList) { %> 
+      <li data-row="<%= cell.row %>" data-col="<%= cell.col %>" class="<%= cell.cssClass %>"><%= cell.symbol %></li>
+    <% } %> 
+  </ol>
+  <div id="game-turn" style="display: <%= viewData.gameTurnInfoDisplay %>;">
+    <p>
+      It's <span id="active-player-name"><%= viewData.activePlayerName %></span
+      ><span><%= viewData.activePlayerNameNextSibling %></span> turn!
+    </p>
+  </div>
+  <div id="active-game-buttons" style="display: <%= viewData.activeGameButtonsDisplay %>;">
+    <button class="btn join-random-room-btn join-new-room-btn">New Room</button>
+    <button class="btn invite-friend-btn join-new-room-btn">
+      Invite Friend
+    </button>
+    <a class="btn" href="/game">HOME</a>
+</section>

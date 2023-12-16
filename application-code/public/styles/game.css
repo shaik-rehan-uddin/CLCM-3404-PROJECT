@@ -1,0 +1,292 @@
+#active-game {
+  text-align: center;
+  margin: 3rem auto 5rem auto;
+  display: none;
+}
+
+#game-link {
+  color: var(--color-primary-700);
+  width: 95%;
+  margin: 0 auto var(--active-game-section-vertical-margin) auto;
+}
+
+#game-link label,
+#game-link input {
+  font-size: var(--font-size-2);
+  text-align: left;
+}
+
+#game-link input {
+  width: 90%;
+}
+
+.game-link-control {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-link-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-over {
+  width: 90%;
+  max-width: 48rem;
+  margin: 0 auto var(--active-game-section-vertical-margin) auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--color-primary-700);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: none;
+}
+
+#game-over h2 {
+  font-size: var(--font-size-4);
+  margin: 0.5rem 0;
+}
+
+#game-over div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#game-over button {
+  width: 12rem;
+  margin: 0 auto;
+}
+
+#game-over button.btn-alt {
+  font-weight: bold;
+}
+
+#players-info {
+  margin: var(--active-game-section-vertical-margin) auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-3);
+}
+
+#players-info .player-name {
+  color: var(--color-primary-700);
+  font-weight: bold;
+}
+
+#players-info p {
+  margin: 0;
+}
+
+#player1,
+#player2 {
+  text-align: center;
+}
+
+.game-error-message {
+  margin: var(--active-game-section-vertical-margin) auto;
+  display: none;
+}
+
+.game-error-message p {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.2rem;
+  margin: 0 auto;
+  width: 80%;
+  background-color: var(--color-error-message);
+  font-size: var(--font-size-0);
+  border-radius: 4px;
+  align-items: center;
+}
+
+.game-error-message span {
+  margin: 0;
+  text-align: left;
+}
+
+.game-error-message button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: var(--color-primary-100);
+  background-color: inherit;
+  font: inherit;
+}
+
+.game-error-message button:hover,
+.game-error-message button:active {
+  cursor: pointer;
+}
+
+#game-board {
+  box-sizing: border-box;
+  padding: 0;
+  list-style: none;
+  width: 15rem;
+  height: 15rem;
+  margin: var(--active-game-section-vertical-margin) auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+#game-board li {
+  background-color: var(--color-primary-300);
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-8);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#game-board li:hover,
+#game-board li:active {
+  background-color: var(--color-primary-400);
+}
+
+#game-board li.selected {
+  background-color: var(--color-primary-400);
+  cursor: default;
+}
+
+#game-board li.not-selectable {
+  background-color: var(--color-primary-300);
+  cursor: default;
+}
+
+#game-turn {
+  margin: var(--active-game-section-vertical-margin) auto
+    var(--active-game-section-vertical-margin) auto;
+  font-size: var(--font-size-3);
+  width: 95%;
+  height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-turn p {
+  margin: 0;
+}
+
+#active-player-name {
+  font-weight: bold;
+  color: var(--color-primary-700);
+}
+
+#active-game-buttons {
+  margin: var(--active-game-section-vertical-margin) auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+#active-game-buttons button,
+#active-game-buttons a {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: var(--font-size-1);
+  width: 100%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* width >= 480px */
+@media (min-width: 480px) {
+  #game-link label,
+  #game-link input {
+    font-size: var(--font-size-3);
+  }
+
+  #game-link input {
+    width: 80%;
+  }
+
+  #game-over {
+    padding: 2rem;
+  }
+
+  #game-over h2 {
+    font-size: var(--font-size-7);
+  }
+
+  #game-over div {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #game-over button {
+    margin: 0;
+  }
+
+  #active-game-buttons {
+    gap: 1rem;
+  }
+
+  #active-game-buttons button,
+  #active-game-buttons a {
+    font-size: var(--font-size-2);
+    width: 10rem;
+    box-sizing: border-box;
+  }
+
+  #active-game {
+    margin-top: 5rem;
+  }
+
+  .game-error-message p {
+    font-size: var(--font-size-1);
+    width: 60%;
+  }
+
+  #game-board {
+    width: 20rem;
+    height: 20rem;
+  }
+}
+
+/* width >= 650px */
+@media (min-width: 650px) {
+  #players-info {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+/* width >= 768px */
+@media (min-width: 768px) {
+  #game-link input {
+    width: 60%;
+  }
+
+  #game-over button {
+    height: 4rem;
+  }
+  .game-error-message p {
+    width: 50%;
+  }
+}

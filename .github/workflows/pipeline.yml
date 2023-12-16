@@ -1,0 +1,96 @@
+name: Deploy Code to EC2 Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@master
+
+    - name: Login to Docker Hub
+      run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Build and push Docker image
+      run: |
+        docker buildx create --use
+        docker buildx inspect --bootstrap
+        docker buildx build --load \
+         -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest
+
+    - name: Check Docker Image Build
+      run: |
+        if docker inspect ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest &> /dev/null; then
+          echo "Docker image built successfully. Test passed!"
+        else
+          echo "Docker image not found. Test failed."
+          exit 1
+        fi
+
+    - name: Check Docker Image Pushed
+      run: |
+        if docker manifest inspect ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest &> /dev/null; then
+          echo "Docker image pushed to Docker Hub successfully. Test passed!"
+        else
+          echo "Docker image not found on Docker Hub. Test failed."
+          exit 1
+        fi
+
+    - name: Logout from Docker Hub
+      run: docker logout
+
+  deploy-to-ec2:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            is_container_running() {
+              local container_name="$1"
+              docker ps -q --filter name="$container_name" 2>/dev/null
+            }
+            stop_and_remove_container() {
+              local container_name="$1"
+              if is_container_running "$container_name"; then
+                echo "Stopping and removing existing container: $container_name"
+                docker stop "$container_name" >/dev/null
+                docker rm "$container_name" >/dev/null
+              fi
+            }
+            stop_and_remove_container "mongo"
+            stop_and_remove_container "game-app"
+            docker pull mongo:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest
+            docker run -d  --name mongo  --restart always  --network host  mongo:latest
+            docker run -d  --name game-app --restart always  --network host ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest
+            docker image prune -f
+  
+  testing:
+    needs: deploy-to-ec2
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Site Accessibility Test
+      run: |
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.HOST_DNS }}/)
+        if [ "$response_code" -eq "200" ]; then
+          echo "Site is accessible. Test passed!"
+        else
+          echo "Site is not accessible. Test failed."
+          exit 1
+        fi

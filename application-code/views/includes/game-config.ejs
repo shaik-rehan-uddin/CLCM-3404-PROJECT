@@ -1,0 +1,27 @@
+<section id="game-config" style="display: <%= viewData.gameConfigDisplay %>;">
+  <form>
+    <div class="form-control">
+      <div>
+        <label for="playername">Choose Your Name</label>
+        <input type="text" name="playername" id="playername" required />
+      </div>
+    </div>
+    <div class="form-error-message">
+      <p>Form error message</p>
+    </div>
+    <div class="form-buttons">
+      <% if (isInvited) { %> 
+        <button data-roomId="<%= roomId %>" class="btn join-friend-room-btn" type="submit">
+          Play with <%= hostPlayerName %>!
+        </button>
+      <% } else { %> 
+        <button class="btn join-random-room-btn" type="submit">
+          Random Room
+        </button>
+        <button class="btn btn-alt invite-friend-btn" type="submit">
+          Invite Friend!
+        </button>
+      <% } %> 
+    </div>
+  </form>
+</section>
