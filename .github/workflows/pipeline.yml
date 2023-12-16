@@ -87,7 +87,7 @@ jobs:
     steps:
     - name: Run Site Accessibility Test
       run: |
-        response_code=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.HOST_DNS }}/)
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.HOST_DNS }}/game)
         if [ "$response_code" -eq "200" ]; then
           echo "Site is accessible. Test passed!"
         else

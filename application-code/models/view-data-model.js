@@ -86,7 +86,7 @@ class ViewData {
 
       //room url for private (owned) room
       if (!this.isOtherPlayerConnected) {
-        this.invitationUrl = `http://localhost:3000/game/new/friend/${room.roomId}`;
+        this.invitationUrl = `http://34.203.100.249:3000/game/new/friend/${room.roomId}`;
       } else {
         this.invitationUrl = "";
       }

@@ -10,18 +10,18 @@
       <p>Form error message</p>
     </div>
     <div class="form-buttons">
-      <% if (isInvited) { %> 
+      <% if (isInvited) { %>
         <button data-roomId="<%= roomId %>" class="btn join-friend-room-btn" type="submit">
           Play with <%= hostPlayerName %>!
         </button>
-      <% } else { %> 
-        <button class="btn join-random-room-btn" type="submit">
-          Random Room
-        </button>
-        <button class="btn btn-alt invite-friend-btn" type="submit">
-          Invite Friend!
-        </button>
-      <% } %> 
+        <% } else { %>
+          <button class="btn btn-alt invite-friend-btn" type="submit">
+            Invite Friend!
+          </button>
+          <button class="btn join-random-room-btn" type="submit">
+            Random Room
+          </button>
+          <% } %>
     </div>
   </form>
 </section>
