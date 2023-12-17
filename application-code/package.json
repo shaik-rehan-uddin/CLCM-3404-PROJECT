@@ -7,7 +7,7 @@
     "node": "17.x"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "sh set-env.sh"
   },
   "author": "Orgher Dalipi",
   "license": "ISC",
