@@ -1,6 +1,6 @@
 //imports built-in
 const path = require("path");
-
+require("dotenv").config();
 //imports 3rd party
 const express = require("express");
 const expressSession = require("express-session");
